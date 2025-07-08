@@ -21,3 +21,14 @@
 - Satellite & Sampling Data Fusion 
 
 > We’ve added dynamic heatmaps for monthly microplastic spread and satellite vs. sampling data visual comparison.
+
+---
+
+##  Checkpoint 4  & 5 (CP4&CP5) – 8th July
+
+### New Module Added:
+- Ocean Plastic Cleanup Simulation
+
+> Used Dijkstra’s algorithm with NetworkX to simulate shortest cleanup route across a 10x10 ocean grid.
+---
+
