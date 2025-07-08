@@ -24,7 +24,8 @@ option = st.sidebar.radio("Select Module:", [
     "Plastic Flow Prediction",
     "Underwater Plastic Detection (AI)",
     "Seasonal Microplastic Heatmap",
-    "Satellite & Sampling Data Fusion"
+    "Satellite & Sampling Data Fusion",
+    "Ocean Plastic Cleanup Simulation"
 ])
 
 # --------------------------
@@ -101,6 +102,26 @@ def satellite_sampling_fusion():
     st_folium(m, width=700, height=450)
 
 # --------------------------
+# Module 5 – Ocean Plastic Cleanup Simulation
+# --------------------------
+def cleanup_simulation():
+    st.header("♻ Ocean Cleanup Simulation")
+
+    # Create a 10x10 grid (ocean area)
+    G = nx.grid_2d_graph(10, 10)
+
+    # Assign random weights (plastic density)
+    for (u, v) in G.edges():
+        G[u][v]['weight'] = np.random.randint(1, 10)
+
+    start, end = (0, 0), (9, 9)
+    path = nx.dijkstra_path(G, start, end)
+    st.write("Optimized cleanup route (shortest path):")
+    st.code(str(path))
+    st.success(f"Total route points: {len(path)}")
+
+
+# --------------------------
 # Dispatcher
 # --------------------------
 if option == "Plastic Flow Prediction":
@@ -111,3 +132,5 @@ elif option == "Seasonal Microplastic Heatmap":
     seasonal_heatmap()
 elif option == "Satellite & Sampling Data Fusion":
     satellite_sampling_fusion()
+elif option == "Ocean Plastic Cleanup Simulation":
+    cleanup_simulation()
