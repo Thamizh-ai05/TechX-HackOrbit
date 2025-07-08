@@ -12,7 +12,7 @@
 
 ---
 
-## Checkpoint 2 (CP2) – 8th July, 2:00 PM
+## Checkpoint 2 & 3 (CP2 & CP3) – 8th July
 
 ###  Modules Working:
 - Plastic Flow Prediction
@@ -21,4 +21,3 @@
 - Satellite & Sampling Data Fusion 
 
 > We’ve added dynamic heatmaps for monthly microplastic spread and satellite vs. sampling data visual comparison.
-
