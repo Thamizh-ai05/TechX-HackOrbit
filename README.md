@@ -31,3 +31,28 @@
 
 > Used Dijkstra’s algorithm with NetworkX to simulate shortest cleanup route across a 10x10 ocean grid.
 ---
+
+---
+
+## Checkpoint 1 & 2 (CP1 & CP2) – 9th July,
+
+### New Module:
+- AI-Based Plastic Type Classification
+
+> Implemented image classification using a pre-trained Keras model to detect plastic type (Bag, Bottle, Net) from uploaded images.
+
+##  Project Summary
+
+### AI-Powered Ocean Plastic Forecast & Detection System
+A multi-module tool that uses AI, satellite fusion, and simulation to detect, classify, and plan ocean plastic cleanup in real-time.
+
+### Key Features:
+- Real-time plastic flow prediction
+- Underwater plastic detection (AI)
+- Monthly microplastic heatmaps
+- Satellite & field data integration
+- Route simulation for cleanup
+- Plastic type detection using ML
+
+### Final development completed.
+## Testing is Loading.....
