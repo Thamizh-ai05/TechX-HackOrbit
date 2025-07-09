@@ -18,9 +18,11 @@ import branca
 def load_underwater_model():
     return load_model("underwater_plastic_model.h5")
 
+
 @st.cache_resource
 def load_type_model():
     return load_model("plastic_type_model.keras")
+
 
 # Sidebar
 st.sidebar.title("🌊 Ocean Plastic Monitoring System")
