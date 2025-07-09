@@ -1,36 +1,38 @@
 import streamlit as st
-import numpy as np
 import pandas as pd
+import numpy as np
 import folium
 from folium.plugins import HeatMap
 from streamlit_folium import st_folium
 from PIL import Image
+import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array
+import matplotlib.pyplot as plt
+import networkx as nx
 import branca
 
-# --------------------------
-# Load Model Functions
-# --------------------------
+# Load models
 @st.cache_resource
 def load_underwater_model():
-    return load_model("models/underwater_plastic_model.h5")
+    return load_model("underwater_plastic_model.h5")
 
-# --------------------------
-# Sidebar Setup
-# --------------------------
+@st.cache_resource
+def load_type_model():
+    return load_model("plastic_type_model.keras")
+
+# Sidebar
 st.sidebar.title("🌊 Ocean Plastic Monitoring System")
 option = st.sidebar.radio("Select Module:", [
     "Plastic Flow Prediction",
     "Underwater Plastic Detection (AI)",
     "Seasonal Microplastic Heatmap",
     "Satellite & Sampling Data Fusion",
-    "Ocean Plastic Cleanup Simulation"
+    "Ocean Plastic Cleanup Simulation",
+    "AI-Based Plastic Type Classification"
 ])
 
-# --------------------------
-# Module 1 – Plastic Flow Prediction
-# --------------------------
+# Module 1
 def plastic_flow_prediction():
     st.header("🌍 Plastic Flow Prediction")
     river = st.selectbox("Select River", ["Ganges", "Yangtze", "Amazon"])
@@ -39,9 +41,7 @@ def plastic_flow_prediction():
     area = np.random.uniform(50, 200)
     st.success(f"Plastic from {river} expected to gather in an area of {area:.2f} sq km.")
 
-# --------------------------
-# Module 2 – Underwater Plastic Detection
-# --------------------------
+# Module 2
 def underwater_plastic_detection():
     st.header("🤖 Underwater Plastic Detection")
     uploaded = st.file_uploader("Upload image...", type=["jpg", "png"])
@@ -51,14 +51,9 @@ def underwater_plastic_detection():
         model = load_underwater_model()
         img_array = img_to_array(img.resize((224, 224))) / 255.0
         pred = model.predict(np.expand_dims(img_array, axis=0))[0][0]
-        if pred > 0.5:
-            st.success(f"🟢 Plastic detected ({pred*100:.1f}% confidence)")
-        else:
-            st.warning(f"⚪ No plastic detected ({(1-pred)*100:.1f}% confidence)")
+        st.success(f"🟢 Plastic detected ({pred*100:.1f}% confidence)" if pred > 0.5 else f"⚪ No plastic detected ({(1-pred)*100:.1f}%)")
 
-# --------------------------
-# Module 3 – Seasonal Heatmap
-# --------------------------
+# Module 3
 def seasonal_heatmap():
     st.header("🗓 Microplastic Heatmap by Month")
     dates = pd.date_range("2024-01-01", "2024-12-31", freq='M')
@@ -78,9 +73,7 @@ def seasonal_heatmap():
     m.add_child(colormap)
     st_folium(m, width=700, height=450)
 
-# --------------------------
-# Module 4 – Satellite & Sampling Fusion
-# --------------------------
+# Module 4
 def satellite_sampling_fusion():
     st.header("🛰 Satellite + Sampling Fusion")
     m = folium.Map(location=[12, 22], zoom_start=5)
@@ -101,16 +94,10 @@ def satellite_sampling_fusion():
     m.get_root().html.add_child(branca.element.Element(legend))
     st_folium(m, width=700, height=450)
 
-# --------------------------
-# Module 5 – Ocean Plastic Cleanup Simulation
-# --------------------------
+# Module 5
 def cleanup_simulation():
     st.header("♻ Ocean Cleanup Simulation")
-
-    # Create a 10x10 grid (ocean area)
     G = nx.grid_2d_graph(10, 10)
-
-    # Assign random weights (plastic density)
     for (u, v) in G.edges():
         G[u][v]['weight'] = np.random.randint(1, 10)
 
@@ -120,10 +107,22 @@ def cleanup_simulation():
     st.code(str(path))
     st.success(f"Total route points: {len(path)}")
 
+# Module 6
+def plastic_type_classification():
+    st.header("🧠 Plastic Type Classification (Bag, Bottle, Net)")
+    uploaded = st.file_uploader("Upload image of plastic type...", type=["jpg", "png"])
+    if uploaded:
+        img = Image.open(uploaded).convert("RGB")
+        st.image(img, caption="Uploaded Image", use_column_width=True)
+        model = load_type_model()
+        img_array = img_to_array(img.resize((224, 224))) / 255.0
+        pred = model.predict(np.expand_dims(img_array, axis=0))[0]
+        classes = ['bag', 'bottle', 'net']
+        label = classes[np.argmax(pred)]
+        confidence = np.max(pred)
+        st.success(f"🔍 Detected: *{label.upper()}* ({confidence*100:.2f}% confidence)")
 
-# --------------------------
 # Dispatcher
-# --------------------------
 if option == "Plastic Flow Prediction":
     plastic_flow_prediction()
 elif option == "Underwater Plastic Detection (AI)":
@@ -134,3 +133,5 @@ elif option == "Satellite & Sampling Data Fusion":
     satellite_sampling_fusion()
 elif option == "Ocean Plastic Cleanup Simulation":
     cleanup_simulation()
+elif option == "AI-Based Plastic Type Classification":
+    plastic_type_classification()
