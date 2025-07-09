@@ -1,10 +1,12 @@
 ## Requirements
 
 streamlit
-tensorflow
-pillow
-numpy
 pandas
-matplotlib
+numpy
 folium
 streamlit-folium
+Pillow
+tensorflow
+matplotlib
+networkx
+branca
