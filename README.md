@@ -63,3 +63,14 @@ A multi-module tool that uses AI, satellite fusion, and simulation to detect, cl
 - No runtime errors or crashes
 - Demo-ready version locked and loaded
 
+
+---
+
+##  CP4 – Final Demo Submission 9th July
+
+- ✅ All modules completed and tested  
+- ✅ Demo video recorded and uploaded  
+- ✅ GitHub repo updated  
+- ✅ Submitted for judging
+
+### - Demo Video: https://drive.google.com/drive/folders/1qW7gyeDsAuQqWEuNsTuzEfr4WD3Ki3Vb
